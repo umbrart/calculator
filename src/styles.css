@@ -1,0 +1,15 @@
+body {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(to right, #00aaff, #00ff6c);
+}
+
+.calculator-grid {
+    display: grid;
+    margin-top: 2rem;
+    grid-template-columns: repreat (4, 6rm);
+    grid-template-rows: minmax (7rem, auto);
+}
