@@ -33,6 +33,7 @@ function reducer(state, {type, payload}){
 
       if (payload.digit === "," && state.currentOperand.includes(",")){
         /*previne de adicionar mais de uma virgula ao operando */
+        /*se o operando ja tem uma virgula entao retorna o state que já está lá */
         return state;
       }
       return {
@@ -47,13 +48,12 @@ function reducer(state, {type, payload}){
       }
 
       if(state.previousOperand == null){
+        /*pega o valor do CurrentOperand e passa para o PreviousOperand*/
         return {
           ...state,
           operation: payload.operation, 
           previousOperand: state.currentOperand,  /*o <previousOperand> recebe o valor de <CurrentOperand>, ele "sobe"*/
           currentOperand: null, /*depois que o valor de <currentOperand> sobe para <previousOperand>, o valor de <currentOperand> é esvaziado para que receba um novo input do usuario*/
-
-          /*pega o valor do CurrentOperand e passa para o PreviousOperand*/
         }
       }
 
@@ -71,9 +71,31 @@ function reducer(state, {type, payload}){
 }
 
 function evaluate({currentOperand, previousOperand, operation}){
-  const prev = parseFloat(previousOperand);
+  const prev = parseFloat(previousOperand); /*converte str para num */
   const current = parseFloat(currentOperand);
-  if (isNaN(prev) || isNaN(current)) return ""
+  if (isNaN(prev) || isNaN(current)) return "";
+
+  let computation = "";
+  switch (operation){
+    case "+":
+      computation = prev + current;
+      break;
+
+    case "-":
+      computation = prev - current;
+      break;
+
+    case "*":
+      computation = prev * current;
+      break;
+    
+    case "÷":
+      computation = prev / current;
+      break;
+  }
+
+  return computation.toString(); /*converte de novo para string */
+
 }
 
 
